@@ -49,6 +49,9 @@ Dokumentacja do Jakarta Commons Logging.
 %build
 touch LICENSE
 cd logging
+cat << EOF > build.properties
+log4j.jar=%{_javalibdir}/log4j.jar
+EOF
 ant dist
 
 %install

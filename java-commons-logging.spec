@@ -1,12 +1,12 @@
 Summary:	Jakarta Commons Logging - interface for logging systems
 Summary(pl):	Jakarta Commons Logging - interfejs do systemów loguj±cych
 Name:		jakarta-commons-logging
-Version:	1.0.2
+Version:	1.0.3
 Release:	1
 License:	Apache
 Group:		Development/Languages/Java
-Source0:	http://jakarta.apache.org/builds/jakarta-commons/release/commons-logging/v%{version}/commons-logging-%{version}-src.tar.gz
-# Source0-md5:	78bfaac25906a54b925bcc285872c9c9
+Source0:	http://www.apache.org/dist/jakarta/commons/logging/source/commons-logging-%{version}-src.tar.gz
+# Source0-md5:	d40606211a1559a9d9fd35eb9091ac15
 URL:		http://jakarta.apache.org/
 BuildRequires:	jakarta-ant
 BuildRequires:	jakarta-log4j
@@ -47,27 +47,27 @@ Dokumentacja do Jakarta Commons Logging.
 %setup -q -n commons-logging-%{version}-src
 
 %build
-touch LICENSE
-cd logging
 cat << EOF > build.properties
 log4j.jar=%{_javalibdir}/log4j.jar
 EOF
-ant dist
+ant \
+    -Dlog4j.jar=%{_javalibdir}/log4j.jar \
+    dist
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_javalibdir}
 
-install logging/dist/*.jar $RPM_BUILD_ROOT%{_javalibdir}
+install dist/*.jar $RPM_BUILD_ROOT%{_javalibdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc logging/dist/LICENSE
+%doc dist/LICENSE.txt
 %{_javalibdir}/*.jar
 
 %files doc
 %defattr(644,root,root,755)
-%doc logging/dist/docs
+%doc dist/docs

@@ -1,12 +1,12 @@
 Summary:	Jakarta Commons Logging - interface for logging systems
 Summary(pl):	Jakarta Commons Logging - interfejs do systemów loguj±cych
 Name:		jakarta-commons-logging
-Version:	1.0.3
+Version:	1.0.4
 Release:	1
 License:	Apache
 Group:		Development/Languages/Java
 Source0:	http://www.apache.org/dist/jakarta/commons/logging/source/commons-logging-%{version}-src.tar.gz
-# Source0-md5:	d40606211a1559a9d9fd35eb9091ac15
+# Source0-md5:	db5dc75c89e794f794be92d10df6be1b
 URL:		http://jakarta.apache.org/
 BuildRequires:	jakarta-ant
 BuildRequires:	jakarta-log4j

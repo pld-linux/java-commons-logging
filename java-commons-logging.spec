@@ -6,6 +6,7 @@ Release:	1
 License:	Apache
 Group:		Development/Languages/Java
 Source0:	http://jakarta.apache.org/builds/jakarta-commons/release/commons-logging/v%{version}/commons-logging-%{version}-src.tar.gz
+# Source0-md5:	78bfaac25906a54b925bcc285872c9c9
 URL:		http://jakarta.apache.org/
 BuildRequires:	jakarta-ant
 BuildRequires:	jakarta-log4j

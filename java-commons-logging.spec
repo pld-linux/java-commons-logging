@@ -15,8 +15,6 @@ Requires:	jre >= 1.4
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_javalibdir	/usr/share/java
-
 %description
 The commons-logging package provides a simple, component oriented
 interface (org.apache.commons.logging.Log) together with wrappers for
@@ -48,17 +46,17 @@ Dokumentacja do Jakarta Commons Logging.
 
 %build
 cat << EOF > build.properties
-log4j.jar=%{_javalibdir}/log4j.jar
+log4j.jar=%{_javadir}/log4j.jar
 EOF
 ant \
-    -Dlog4j.jar=%{_javalibdir}/log4j.jar \
+    -Dlog4j.jar=%{_javadir}/log4j.jar \
     dist
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_javalibdir}
+install -d $RPM_BUILD_ROOT%{_javadir}
 
-install dist/*.jar $RPM_BUILD_ROOT%{_javalibdir}
+install dist/*.jar $RPM_BUILD_ROOT%{_javadir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -66,7 +64,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc dist/LICENSE.txt
-%{_javalibdir}/*.jar
+%{_javadir}/*.jar
 
 %files doc
 %defattr(644,root,root,755)

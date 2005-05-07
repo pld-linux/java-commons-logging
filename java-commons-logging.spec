@@ -7,7 +7,7 @@ License:	Apache
 Group:		Development/Languages/Java
 Source0:	http://www.apache.org/dist/jakarta/commons/logging/source/commons-logging-%{version}-src.tar.gz
 # Source0-md5:	db5dc75c89e794f794be92d10df6be1b
-URL:		http://jakarta.apache.org/
+URL:		http://jakarta.apache.org/commons/logging/
 BuildRequires:	jakarta-ant
 BuildRequires:	jakarta-log4j
 BuildRequires:	jdk >= 1.4
@@ -48,9 +48,8 @@ Dokumentacja do Jakarta Commons Logging.
 cat << EOF > build.properties
 log4j.jar=%{_javadir}/log4j.jar
 EOF
-ant \
-    -Dlog4j.jar=%{_javadir}/log4j.jar \
-    dist
+ant dist \
+	-Dlog4j.jar=%{_javadir}/log4j.jar
 
 %install
 rm -rf $RPM_BUILD_ROOT

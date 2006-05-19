@@ -8,7 +8,7 @@ Group:		Development/Languages/Java
 Source0:	http://www.apache.org/dist/jakarta/commons/logging/source/commons-logging-%{version}-src.tar.gz
 # Source0-md5:	db5dc75c89e794f794be92d10df6be1b
 URL:		http://jakarta.apache.org/commons/logging/
-BuildRequires:	jakarta-ant
+BuildRequires:	ant
 BuildRequires:	jakarta-log4j
 BuildRequires:	jdk >= 1.4
 Requires:	jre >= 1.4

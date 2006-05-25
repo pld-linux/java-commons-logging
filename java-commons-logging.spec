@@ -9,10 +9,13 @@ Source0:	http://www.apache.org/dist/jakarta/commons/logging/source/commons-loggi
 # Source0-md5:	db5dc75c89e794f794be92d10df6be1b
 URL:		http://jakarta.apache.org/commons/logging/
 BuildRequires:	ant
-BuildRequires:	jakarta-log4j
+BuildRequires:	logging-log4j
 BuildRequires:	jdk >= 1.4
+BuildRequires:	jpackage-utils
+BuildRequires:	rpmbuild(macros) >= 1.300
 Requires:	jre >= 1.4
 BuildArch:	noarch
+ExclusiveArch:	i586 i686 pentium3 pentium4 athlon %{x8664} noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -30,41 +33,45 @@ uruchamiania, którego systemu chce u¿ywaæ. Ponadto dostarczona jest
 niewielka liczba podstawowych implementacji, aby pozwoliæ u¿ytkownikom
 na u¿ywanie pakietu samodzielnie.
 
-%package doc
+%package javadoc
 Summary:	Jakarta Commons Logging documentation
 Summary(pl):	Dokumentacja do Jakarta Commons Logging
 Group:		Development/Languages/Java
+Obsoletes:	jakarta-commons-logging-doc
 
-%description doc
+%description javadoc
 Jakarta Commons Logging documentation.
 
-%description doc -l pl
+%description javadoc -l pl
 Dokumentacja do Jakarta Commons Logging.
 
 %prep
 %setup -q -n commons-logging-%{version}-src
 
 %build
-cat << EOF > build.properties
-log4j.jar=%{_javadir}/log4j.jar
-EOF
-ant dist \
-	-Dlog4j.jar=%{_javadir}/log4j.jar
+export CLASSPATH="`build-classpath log4j`"
+export JAVA_HOME="%{java_home}"
+ant dist javadoc
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_javadir}
+install -d $RPM_BUILD_ROOT{%{_javadir},%{_javadocdir}/%{name}-%{version}}
 
-install dist/*.jar $RPM_BUILD_ROOT%{_javadir}
+install dist/commons-logging-api.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-%{version}-api.jar
+install dist/commons-logging.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-%{version}.jar
+ln -s commons-logging-%{version}-api.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-api.jar
+ln -s commons-logging-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging.jar
+
+cp -R dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc dist/LICENSE.txt
+%doc dist/*.txt
 %{_javadir}/*.jar
 
-%files doc
+%files javadoc
 %defattr(644,root,root,755)
-%doc dist/docs
+%doc %{_javadocdir}/%{name}-%{version}

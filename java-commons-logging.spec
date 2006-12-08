@@ -2,16 +2,16 @@ Summary:	Jakarta Commons Logging - interface for logging systems
 Summary(pl):	Jakarta Commons Logging - interfejs do systemów loguj±cych
 Name:		jakarta-commons-logging
 Version:	1.0.4
-Release:	1
+Release:	2
 License:	Apache
 Group:		Development/Languages/Java
 Source0:	http://www.apache.org/dist/jakarta/commons/logging/source/commons-logging-%{version}-src.tar.gz
 # Source0-md5:	db5dc75c89e794f794be92d10df6be1b
 URL:		http://jakarta.apache.org/commons/logging/
 BuildRequires:	ant
-BuildRequires:	logging-log4j
 BuildRequires:	jdk >= 1.4
 BuildRequires:	jpackage-utils
+BuildRequires:	logging-log4j
 BuildRequires:	rpmbuild(macros) >= 1.300
 Requires:	jre >= 1.4
 BuildArch:	noarch
@@ -37,6 +37,7 @@ na u¿ywanie pakietu samodzielnie.
 Summary:	Jakarta Commons Logging documentation
 Summary(pl):	Dokumentacja do Jakarta Commons Logging
 Group:		Development/Languages/Java
+Requires:	jpackage-utils
 Obsoletes:	jakarta-commons-logging-doc
 
 %description javadoc
@@ -51,7 +52,7 @@ Dokumentacja do Jakarta Commons Logging.
 %build
 export CLASSPATH="`build-classpath log4j`"
 export JAVA_HOME="%{java_home}"
-ant dist javadoc
+%ant dist javadoc
 
 %install
 rm -rf $RPM_BUILD_ROOT

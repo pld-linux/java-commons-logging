@@ -1,5 +1,5 @@
 Summary:	Jakarta Commons Logging - interface for logging systems
-Summary(pl):	Jakarta Commons Logging - interfejs do systemów loguj±cych
+Summary(pl.UTF-8):   Jakarta Commons Logging - interfejs do systemÃ³w logujÄ…cych
 Name:		jakarta-commons-logging
 Version:	1.0.4
 Release:	2
@@ -25,17 +25,17 @@ logging systems. The user can choose at runtime which system they want
 to use. In addition, a small number of basic implementations are
 provided to allow users to use the package standalone.
 
-%description -l pl
+%description -l pl.UTF-8
 Pakiet commons-logging dostarcza prostego, zorientowanego na
 komponenty interfejsu (org.apache.commons.logging.Log) wraz z
-wrapperami do systemów loguj±cych. U¿ytkownik mo¿e wybraæ w czasie
-uruchamiania, którego systemu chce u¿ywaæ. Ponadto dostarczona jest
-niewielka liczba podstawowych implementacji, aby pozwoliæ u¿ytkownikom
-na u¿ywanie pakietu samodzielnie.
+wrapperami do systemÃ³w logujÄ…cych. UÅ¼ytkownik moÅ¼e wybraÄ‡ w czasie
+uruchamiania, ktÃ³rego systemu chce uÅ¼ywaÄ‡. Ponadto dostarczona jest
+niewielka liczba podstawowych implementacji, aby pozwoliÄ‡ uÅ¼ytkownikom
+na uÅ¼ywanie pakietu samodzielnie.
 
 %package javadoc
 Summary:	Jakarta Commons Logging documentation
-Summary(pl):	Dokumentacja do Jakarta Commons Logging
+Summary(pl.UTF-8):   Dokumentacja do Jakarta Commons Logging
 Group:		Development/Languages/Java
 Requires:	jpackage-utils
 Obsoletes:	jakarta-commons-logging-doc
@@ -43,7 +43,7 @@ Obsoletes:	jakarta-commons-logging-doc
 %description javadoc
 Jakarta Commons Logging documentation.
 
-%description javadoc -l pl
+%description javadoc -l pl.UTF-8
 Dokumentacja do Jakarta Commons Logging.
 
 %prep

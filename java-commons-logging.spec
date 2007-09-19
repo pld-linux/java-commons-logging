@@ -12,6 +12,8 @@ BuildRequires:	ant
 BuildRequires:	jdk >= 1.4
 BuildRequires:	jpackage-utils
 BuildRequires:	logging-log4j
+BuildRequires:	jakarta-servletapi
+BuildRequires:	avalon-framework
 BuildRequires:	rpmbuild(macros) >= 1.300
 Requires:	jre >= 1.4
 BuildArch:	noarch

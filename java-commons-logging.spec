@@ -7,13 +7,14 @@ License:	Apache
 Group:		Development/Languages/Java
 Source0:	http://www.apache.org/dist/jakarta/commons/logging/source/commons-logging-%{version}-src.tar.gz
 # Source0-md5:	6e8ec63e4904d3e894081fd60010d876
+Patch0:		%{name}-deps.patch
 URL:		http://jakarta.apache.org/commons/logging/
 BuildRequires:	ant
 BuildRequires:	jdk >= 1.4
 BuildRequires:	jpackage-utils
 BuildRequires:	logging-log4j
 BuildRequires:	jakarta-servletapi
-BuildRequires:	avalon-framework
+#BuildRequires:	avalon-framework
 BuildRequires:	rpmbuild(macros) >= 1.300
 Requires:	jre >= 1.4
 BuildArch:	noarch

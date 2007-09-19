@@ -51,6 +51,7 @@ Dokumentacja do Jakarta Commons Logging.
 
 %prep
 %setup -q -n commons-logging-%{version}-src
+%patch0 -p1
 
 %build
 export CLASSPATH="`build-classpath log4j`"

@@ -1,3 +1,4 @@
+%include	/usr/lib/rpm/macros.java
 Summary:	Jakarta Commons Logging - interface for logging systems
 Summary(pl.UTF-8):	Jakarta Commons Logging - interfejs do systemów logujących
 Name:		jakarta-commons-logging
@@ -7,8 +8,10 @@ License:	Apache
 Group:		Development/Languages/Java
 Source0:	http://www.apache.org/dist/jakarta/commons/logging/source/commons-logging-%{version}-src.tar.gz
 # Source0-md5:	db5dc75c89e794f794be92d10df6be1b
+Patch0:		%{name}-target.patch
 URL:		http://jakarta.apache.org/commons/logging/
 BuildRequires:	ant
+BuildRequires:	rpm-javaprov
 BuildRequires:	jdk >= 1.4
 BuildRequires:	jpackage-utils
 BuildRequires:	logging-log4j
@@ -36,7 +39,7 @@ na używanie pakietu samodzielnie.
 %package javadoc
 Summary:	Jakarta Commons Logging documentation
 Summary(pl.UTF-8):	Dokumentacja do Jakarta Commons Logging
-Group:		Development/Languages/Java
+Group:		Documentation
 Requires:	jpackage-utils
 Obsoletes:	jakarta-commons-logging-doc
 
@@ -48,10 +51,18 @@ Dokumentacja do Jakarta Commons Logging.
 
 %prep
 %setup -q -n commons-logging-%{version}-src
+%patch0 -p1
 
 %build
-export CLASSPATH="`build-classpath log4j`"
-export JAVA_HOME="%{java_home}"
+required_jars="log4j junit logkit avalon-framework"
+
+# TODO for tests:
+#  <property name="junit.jar"               value="${junit.home}/junit.jar"/>
+#  <property name="log4j.jar"               value="${jakarta.home}/jakarta-log4j/dist/lib/log4j.jar"/>
+#  <property name="logkit.jar"              value="${jakarta.home}/jakarta-avalon-logkit/build/log/logkit"/>
+#  <property name="avalon-framework.jar"    value="../../Avalon-4.1.4/avalon-framework-4.1.4.jar"/>
+
+export CLASSPATH=$(build-classpath $required_jars)
 %ant dist javadoc
 
 %install
@@ -63,10 +74,14 @@ install dist/commons-logging.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-%{ve
 ln -s commons-logging-%{version}-api.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-api.jar
 ln -s commons-logging-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging.jar
 
-cp -R dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+cp -a dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post javadoc
+ln -nfs %{name}-%{version} %{_javadocdir}/%{name}
 
 %files
 %defattr(644,root,root,755)
@@ -75,4 +90,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files javadoc
 %defattr(644,root,root,755)
-%doc %{_javadocdir}/%{name}-%{version}
+%{_javadocdir}/%{name}-%{version}
+%ghost %{_javadocdir}/%{name}

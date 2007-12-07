@@ -9,12 +9,12 @@ Group:		Development/Languages/Java
 Source0:	http://www.apache.org/dist/jakarta/commons/logging/source/commons-logging-%{version}-src.tar.gz
 # Source0-md5:	db5dc75c89e794f794be92d10df6be1b
 Patch0:		%{name}-target.patch
-URL:		http://jakarta.apache.org/commons/logging/
+URL:		http://commons.apache.org/logging/
 BuildRequires:	ant
-BuildRequires:	rpm-javaprov
 BuildRequires:	jdk >= 1.4
 BuildRequires:	jpackage-utils
 BuildRequires:	logging-log4j
+BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 Requires:	jre >= 1.4
 BuildArch:	noarch
@@ -55,13 +55,6 @@ Dokumentacja do Jakarta Commons Logging.
 
 %build
 required_jars="log4j junit logkit avalon-framework"
-
-# TODO for tests:
-#  <property name="junit.jar"               value="${junit.home}/junit.jar"/>
-#  <property name="log4j.jar"               value="${jakarta.home}/jakarta-log4j/dist/lib/log4j.jar"/>
-#  <property name="logkit.jar"              value="${jakarta.home}/jakarta-avalon-logkit/build/log/logkit"/>
-#  <property name="avalon-framework.jar"    value="../../Avalon-4.1.4/avalon-framework-4.1.4.jar"/>
-
 export CLASSPATH=$(build-classpath $required_jars)
 %ant dist javadoc
 

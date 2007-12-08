@@ -1,12 +1,15 @@
+# TODO
+# - rename to apache-commons-logging?
+# - update to 1.1 from DEVEL
 %include	/usr/lib/rpm/macros.java
 Summary:	Jakarta Commons Logging - interface for logging systems
 Summary(pl.UTF-8):	Jakarta Commons Logging - interfejs do systemów logujących
 Name:		jakarta-commons-logging
 Version:	1.0.4
-Release:	3
+Release:	4
 License:	Apache
 Group:		Development/Languages/Java
-Source0:	http://www.apache.org/dist/jakarta/commons/logging/source/commons-logging-%{version}-src.tar.gz
+Source0:	http://archive.apache.org/dist/commons/logging/source/commons-logging-%{version}-src.tar.gz
 # Source0-md5:	db5dc75c89e794f794be92d10df6be1b
 Patch0:		%{name}-target.patch
 URL:		http://commons.apache.org/logging/
@@ -18,7 +21,6 @@ BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 Requires:	jre >= 1.4
 BuildArch:	noarch
-ExclusiveArch:	i586 i686 pentium3 pentium4 athlon %{x8664} noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description

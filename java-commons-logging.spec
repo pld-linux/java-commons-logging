@@ -5,8 +5,8 @@
 %bcond_without	javadoc		# don't build javadoc
 
 %include	/usr/lib/rpm/macros.java
-Summary:	Jakarta Commons Logging - interface for logging systems
-Summary(pl.UTF-8):	Jakarta Commons Logging - interfejs do systemów logujących
+Summary:	Commons Logging - interface for logging systems
+Summary(pl.UTF-8):	Commons Logging - interfejs do systemów logujących
 Name:		java-commons-logging
 Version:	1.0.4
 Release:	4
@@ -46,17 +46,19 @@ niewielka liczba podstawowych implementacji, aby pozwolić użytkownikom
 na używanie pakietu samodzielnie.
 
 %package javadoc
-Summary:	Jakarta Commons Logging documentation
-Summary(pl.UTF-8):	Dokumentacja do Jakarta Commons Logging
+Summary:	Commons Logging documentation
+Summary(pl.UTF-8):	Dokumentacja do Commons Logging
 Group:		Documentation
 Requires:	jpackage-utils
+Provides:	jakarta-commons-logging-javadoc
 Obsoletes:	jakarta-commons-logging-doc
+Obsoletes:	jakarta-commons-logging-javadoc
 
 %description javadoc
-Jakarta Commons Logging documentation.
+Commons Logging documentation.
 
 %description javadoc -l pl.UTF-8
-Dokumentacja do Jakarta Commons Logging.
+Dokumentacja do Commons Logging.
 
 %prep
 %setup -q -n commons-logging-%{version}-src

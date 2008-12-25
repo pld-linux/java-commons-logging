@@ -19,6 +19,7 @@ URL:		http://commons.apache.org/logging/
 BuildRequires:	ant
 BuildRequires:	jdk >= 1.4
 BuildRequires:	jpackage-utils
+BuildRequires:	junit
 BuildRequires:	logging-log4j
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300

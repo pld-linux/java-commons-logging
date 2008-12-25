@@ -17,8 +17,6 @@ Source0:	http://archive.apache.org/dist/commons/logging/source/commons-logging-%
 Patch0:		jakarta-commons-logging-target.patch
 URL:		http://commons.apache.org/logging/
 BuildRequires:	ant
-BuildRequires:	avalon-framework-api
-BuildRequires:	avalon-logkit
 BuildRequires:	jdk >= 1.4
 BuildRequires:	jpackage-utils
 BuildRequires:	logging-log4j
@@ -64,7 +62,7 @@ Dokumentacja do Jakarta Commons Logging.
 %patch0 -p1
 
 %build
-required_jars="log4j junit avalon-logkit avalon-framework-api"
+required_jars="log4j junit"
 CLASSPATH=$(build-classpath $required_jars)
 export CLASSPATH
 %ant dist javadoc

@@ -4,7 +4,7 @@ Summary(pl.UTF-8):	Commons Logging - interfejs do systemów logujących
 Name:		java-commons-logging
 Version:	1.1.1
 Release:	0.1
-License:	Apache License 2.0
+License:	Apache v2.0
 Group:		Development/Languages/Java
 Source0:	http://www.apache.org/dist/commons/logging/source/commons-logging-%{version}-src.tar.gz
 # Source0-md5:	e5cfa8cca13152d7545fde6b1783c60a
@@ -12,9 +12,12 @@ Patch0:		%{name}-target.patch
 URL:		http://commons.apache.org/logging/
 BuildRequires:	ant
 BuildRequires:	ant-junit
+BuildRequires:	avalon-framework
+BuildRequires:	avalon-logkit
 BuildRequires:	jakarta-servletapi >= 4
 BuildRequires:	jdk >= 1.4
 BuildRequires:	jpackage-utils
+BuildRequires:	junit
 BuildRequires:	logging-log4j
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300

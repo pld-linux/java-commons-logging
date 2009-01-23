@@ -1,7 +1,7 @@
 %include	/usr/lib/rpm/macros.java
-Summary:	Jakarta Commons Logging - interface for logging systems
-Summary(pl.UTF-8):	Jakarta Commons Logging - interfejs do systemów logujących
-Name:		jakarta-commons-logging
+Summary:	Commons Logging - interface for logging systems
+Summary(pl.UTF-8):	Commons Logging - interfejs do systemów logujących
+Name:		java-commons-logging
 Version:	1.1.1
 Release:	0.1
 License:	Apache License 2.0
@@ -46,17 +46,17 @@ Requires:	jpackage-utils
 Obsoletes:	jakarta-commons-logging-doc
 
 %description javadoc
-Jakarta Commons Logging documentation.
+Commons Logging documentation.
 
 %description javadoc -l pl.UTF-8
-Dokumentacja do Jakarta Commons Logging.
+Dokumentacja do Commons Logging.
 
 %prep
 %setup -q -n commons-logging-%{version}-src
 #%patch0 -p1
 
 %build
-required_jars="log4j junit logkit avalon-framework servlet-api"
+required_jars="log4j junit avalon-logkit avalon-framework-impl servlet-api"
 export CLASSPATH=$(build-classpath $required_jars)
 %ant dist javadoc
 

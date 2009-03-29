@@ -1,3 +1,11 @@
+%bcond_with	java_sun	# build with java-sun
+
+%if "%{pld_release}" == "ti"
+%define	with_java_sun	1
+%endif
+
+%define		srcname	commons-logging
+
 %include	/usr/lib/rpm/macros.java
 Summary:	Commons Logging - interface for logging systems
 Summary(pl.UTF-8):	Commons Logging - interfejs do systemów logujących
@@ -15,15 +23,17 @@ BuildRequires:	ant-junit
 BuildRequires:	avalon-framework
 BuildRequires:	avalon-logkit
 BuildRequires:	jakarta-servletapi >= 4
-BuildRequires:	jdk >= 1.4
+%{!?with_java_sun:BuildRequires:	java-gcj-compat-devel}
+%{?with_java_sun:BuildRequires:	java-sun}
 BuildRequires:	jpackage-utils
 BuildRequires:	junit
 BuildRequires:	logging-log4j
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 Requires:	jre >= 1.4
+Obsoletes:	jakarta-commons-logging
+Provides:	jakarta-commons-logging
 BuildArch:	noarch
-ExclusiveArch:	i586 i686 pentium3 pentium4 athlon %{x8664} noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -42,11 +52,12 @@ niewielka liczba podstawowych implementacji, aby pozwolić użytkownikom
 na używanie pakietu samodzielnie.
 
 %package javadoc
-Summary:	Jakarta Commons Logging documentation
-Summary(pl.UTF-8):	Dokumentacja do Jakarta Commons Logging
+Summary:	Commons Logging documentation
+Summary(pl.UTF-8):	Dokumentacja do Commons Logging
 Group:		Documentation
 Requires:	jpackage-utils
 Obsoletes:	jakarta-commons-logging-doc
+Obsoletes:	jakarta-commons-logging-javadoc
 
 %description javadoc
 Commons Logging documentation.
@@ -65,21 +76,21 @@ export CLASSPATH=$(build-classpath $required_jars)
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_javadir},%{_javadocdir}/%{name}-%{version}}
+install -d $RPM_BUILD_ROOT{%{_javadir},%{_javadocdir}/%{srcname}-%{version}}
 
-install dist/commons-logging-api.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-%{version}-api.jar
-install dist/commons-logging.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-%{version}.jar
-ln -s commons-logging-%{version}-api.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-api.jar
-ln -s commons-logging-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging.jar
+install dist/%{srcname}-api.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}-%{version}-api.jar
+install dist/%{srcname}.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}-%{version}.jar
+ln -s %{srcname}-%{version}-api.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}-api.jar
+ln -s %{srcname}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}.jar
 
-cp -a dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
+cp -a dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
+ln -s %{srcname}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{srcname} # ghost symlink
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post javadoc
-ln -nfs %{name}-%{version} %{_javadocdir}/%{name}
+ln -nfs %{srcname}-%{version} %{_javadocdir}/%{srcname}
 
 %files
 %defattr(644,root,root,755)
@@ -88,5 +99,5 @@ ln -nfs %{name}-%{version} %{_javadocdir}/%{name}
 
 %files javadoc
 %defattr(644,root,root,755)
-%{_javadocdir}/%{name}-%{version}
-%ghost %{_javadocdir}/%{name}
+%{_javadocdir}/%{srcname}-%{version}
+%ghost %{_javadocdir}/%{srcname}

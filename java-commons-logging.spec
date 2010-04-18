@@ -17,10 +17,10 @@ Source0:	http://archive.apache.org/dist/commons/logging/source/commons-logging-%
 Patch0:		jakarta-commons-logging-target.patch
 URL:		http://commons.apache.org/logging/
 BuildRequires:	ant
+BuildRequires:	java-log4j
 BuildRequires:	jdk >= 1.4
 BuildRequires:	jpackage-utils
 BuildRequires:	junit
-BuildRequires:	logging-log4j
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 Requires:	jpackage-utils

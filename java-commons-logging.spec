@@ -4,9 +4,9 @@ Summary:	Commons Logging - interface for logging systems
 Summary(pl.UTF-8):	Commons Logging - interfejs do systemów logujących
 Name:		java-commons-logging
 Version:	1.1.1
-Release:	0.1
+Release:	1
 License:	Apache v2.0
-Group:		Development/Languages/Java
+Group:		Libraries/Java
 Source0:	http://www.apache.org/dist/commons/logging/source/commons-logging-%{version}-src.tar.gz
 # Source0-md5:	e5cfa8cca13152d7545fde6b1783c60a
 Patch0:		build.xml.patch

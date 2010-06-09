@@ -69,10 +69,17 @@ export LC_ALL=en_US
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_javadir}
 
-for I in target/*.jar; do
-  install $I $RPM_BUILD_ROOT%{_javadir}/${I#target/}-%{version}.jar
-  ln -s ${I#target/}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/${I#target/}-api.jar
-done
+install target/commons-logging-1.1.1.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-%{version}.jar
+install target/commons-logging-adapters-1.1.1.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-adapters-%{version}.jar
+install target/commons-logging-api-1.1.1.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-api-%{version}.jar
+install target/commons-logging-appender.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-appender-%{version}.jar
+install target/commons-logging-wrapper.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-wrapper-%{version}.jar
+
+ln -s commons-logging-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging.jar
+ln -s commons-logging-adapters-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-adapters.jar
+ln -s commons-logging-api-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-api.jar
+ln -s commons-logging-appender-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-appender.jar
+ln -s commons-logging-wrapper-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-wrapper.jar
 
 %clean
 rm -rf $RPM_BUILD_ROOT

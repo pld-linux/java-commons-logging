@@ -1,9 +1,3 @@
-# TODO
-# - update to 1.1 from DEVEL
-#
-# Conditional build:
-%bcond_without	javadoc		# don't build javadoc
-
 %include	/usr/lib/rpm/macros.java
 %define		srcname	commons-logging
 Summary:	Commons Logging - interface for logging systems
@@ -15,6 +9,7 @@ License:	Apache v2.0
 Group:		Development/Languages/Java
 Source0:	http://www.apache.org/dist/commons/logging/source/commons-logging-%{version}-src.tar.gz
 # Source0-md5:	e5cfa8cca13152d7545fde6b1783c60a
+Patch0:		build.xml.patch
 URL:		http://commons.apache.org/logging/
 BuildRequires:	ant
 BuildRequires:	ant-junit
@@ -48,61 +43,40 @@ uruchamiania, którego systemu chce używać. Ponadto dostarczona jest
 niewielka liczba podstawowych implementacji, aby pozwolić użytkownikom
 na używanie pakietu samodzielnie.
 
-%package javadoc
-Summary:	Commons Logging documentation
-Summary(pl.UTF-8):	Dokumentacja do Commons Logging
-Group:		Documentation
-Requires:	jpackage-utils
-Provides:	jakarta-commons-logging-javadoc
-Obsoletes:	jakarta-commons-logging-doc
-Obsoletes:	jakarta-commons-logging-javadoc
-
-%description javadoc
-Commons Logging documentation.
-
-%description javadoc -l pl.UTF-8
-Dokumentacja do Commons Logging.
-
 %prep
 %setup -q -n commons-logging-%{version}-src
 
-%build
-required_jars="log4j junit avalon-logkit avalon-framework-impl servlet-api"
-CLASSPATH=$(build-classpath $required_jars)
-export CLASSPATH
+%undos build.xml
+%patch0 -p1
 
-%ant dist javadoc
+%build
+cat > build.properties << EOF
+log4j12.jar=%(find-jar log4j)
+junit.jar=%(find-jar junit)
+logkit.jar=%(find-jar avalon-logkit)
+avalon-framework-impl.jar=%(find-jar avalon-framework-impl.jar)
+avalon-framework-api.jar=%(find-jar avalon-framework-api.jar)
+servletapi.jar=%(find-jar servlet-api.jar)
+EOF
+
+! grep -q '=$' build.properties
+
+export LC_ALL=en_US
+
+%ant
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_javadir},%{_javadocdir}/%{srcname}-%{version}}
+install -d $RPM_BUILD_ROOT%{_javadir}
 
-install dist/%{srcname}-api.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}-%{version}-api.jar
-install dist/%{srcname}.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}-%{version}.jar
-ln -s %{srcname}-%{version}-api.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}-api.jar
-ln -s %{srcname}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}.jar
-
-# javadoc
-%if %{with javadoc}
-install -d $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
-cp -a dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
-ln -s %{srcname}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{srcname} # ghost symlink
-%endif
+for I in target/*.jar; do
+  install $I $RPM_BUILD_ROOT%{_javadir}/${I#target/}-%{version}.jar
+  ln -s ${I#target/}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/${I#target/}-api.jar
+done
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post javadoc
-ln -nfs %{srcname}-%{version} %{_javadocdir}/%{srcname}
-
 %files
 %defattr(644,root,root,755)
-%doc dist/*.txt
 %{_javadir}/*.jar
-
-%if %{with javadoc}
-%files javadoc
-%defattr(644,root,root,755)
-%{_javadocdir}/%{srcname}-%{version}
-%ghost %{_javadocdir}/%{srcname}
-%endif

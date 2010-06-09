@@ -5,27 +5,31 @@
 %bcond_without	javadoc		# don't build javadoc
 
 %include	/usr/lib/rpm/macros.java
+%define		srcname	commons-logging
 Summary:	Commons Logging - interface for logging systems
 Summary(pl.UTF-8):	Commons Logging - interfejs do systemów logujących
 Name:		java-commons-logging
-Version:	1.0.4
-Release:	4
-License:	Apache
+Version:	1.1.1
+Release:	1
+License:	Apache v2.0
 Group:		Libraries/Java
-Source0:	http://archive.apache.org/dist/commons/logging/source/commons-logging-%{version}-src.tar.gz
-# Source0-md5:	db5dc75c89e794f794be92d10df6be1b
-Patch0:		jakarta-commons-logging-target.patch
+Source0:	http://www.apache.org/dist/commons/logging/source/commons-logging-%{version}-src.tar.gz
+# Source0-md5:	e5cfa8cca13152d7545fde6b1783c60a
+Patch0:		build.xml.patch
 URL:		http://commons.apache.org/logging/
 BuildRequires:	ant
+BuildRequires:	ant-junit
+BuildRequires:	java(servlet)
+BuildRequires:	java-avalon-framework
+BuildRequires:	java-avalon-logkit
+BuildRequires:	java-junit
 BuildRequires:	java-log4j
 BuildRequires:	jdk >= 1.4
 BuildRequires:	jpackage-utils
-BuildRequires:	junit
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 Requires:	jpackage-utils
 Requires:	jre >= 1.4
-Provides:	jakarta-commons-logging
 Obsoletes:	jakarta-commons-logging
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -45,60 +49,47 @@ uruchamiania, którego systemu chce używać. Ponadto dostarczona jest
 niewielka liczba podstawowych implementacji, aby pozwolić użytkownikom
 na używanie pakietu samodzielnie.
 
-%package javadoc
-Summary:	Commons Logging documentation
-Summary(pl.UTF-8):	Dokumentacja do Commons Logging
-Group:		Documentation
-Requires:	jpackage-utils
-Provides:	jakarta-commons-logging-javadoc
-Obsoletes:	jakarta-commons-logging-doc
-Obsoletes:	jakarta-commons-logging-javadoc
-
-%description javadoc
-Commons Logging documentation.
-
-%description javadoc -l pl.UTF-8
-Dokumentacja do Commons Logging.
-
 %prep
 %setup -q -n commons-logging-%{version}-src
+
+%undos build.xml
 %patch0 -p1
 
 %build
-required_jars="log4j junit"
-CLASSPATH=$(build-classpath $required_jars)
-export CLASSPATH
-%ant dist javadoc
+cat > build.properties << EOF
+log4j12.jar=%(find-jar log4j)
+junit.jar=%(find-jar junit)
+logkit.jar=%(find-jar avalon-logkit)
+avalon-framework-impl.jar=%(find-jar avalon-framework-impl.jar)
+avalon-framework-api.jar=%(find-jar avalon-framework-api.jar)
+servletapi.jar=%(find-jar servlet-api.jar)
+EOF
+
+! grep -q '=$' build.properties
+
+export LC_ALL=en_US
+
+%ant
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_javadir}
-cp -a dist/commons-logging-api.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-%{version}-api.jar
-cp -a dist/commons-logging.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-%{version}.jar
-ln -s commons-logging-%{version}-api.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-api.jar
-ln -s commons-logging-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging.jar
 
-# javadoc
-%if %{with javadoc}
-install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -a dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
-%endif
+install target/commons-logging-1.1.1.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-%{version}.jar
+install target/commons-logging-adapters-1.1.1.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-adapters-%{version}.jar
+install target/commons-logging-api-1.1.1.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-api-%{version}.jar
+install target/commons-logging-appender.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-appender-%{version}.jar
+install target/commons-logging-wrapper.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-wrapper-%{version}.jar
+
+ln -s commons-logging-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging.jar
+ln -s commons-logging-adapters-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-adapters.jar
+ln -s commons-logging-api-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-api.jar
+ln -s commons-logging-appender-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-appender.jar
+ln -s commons-logging-wrapper-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-wrapper.jar
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post javadoc
-ln -nfs %{name}-%{version} %{_javadocdir}/%{name}
-
 %files
 %defattr(644,root,root,755)
-%doc dist/*.txt
 %{_javadir}/*.jar
-
-%if %{with javadoc}
-%files javadoc
-%defattr(644,root,root,755)
-%{_javadocdir}/%{name}-%{version}
-%ghost %{_javadocdir}/%{name}
-%endif

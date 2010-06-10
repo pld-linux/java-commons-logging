@@ -1,5 +1,5 @@
-# TODO
-# - update to 1.1 from DEVEL
+# NOTE:
+# - when upgrading, please sync Source100 and Patch100 in tomcat.spec
 #
 # Conditional build:
 %bcond_without	javadoc		# don't build javadoc

@@ -93,4 +93,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%{_javadir}/*.jar
+%doc NOTICE.txt PROPOSAL.html RELEASE-NOTES.txt STATUS.html license-header.txt
+%{_javadir}/commons-logging-%{version}.jar
+%{_javadir}/commons-logging.jar
+%{_javadir}/commons-logging-adapters-%{version}.jar
+%{_javadir}/commons-logging-adapters.jar
+%{_javadir}/commons-logging-api-%{version}.jar
+%{_javadir}/commons-logging-api.jar
+%{_javadir}/commons-logging-appender-%{version}.jar
+%{_javadir}/commons-logging-appender.jar
+%{_javadir}/commons-logging-wrapper-%{version}.jar
+%{_javadir}/commons-logging-wrapper.jar

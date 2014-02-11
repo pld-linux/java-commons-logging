@@ -9,12 +9,12 @@
 Summary:	Commons Logging - interface for logging systems
 Summary(pl.UTF-8):	Commons Logging - interfejs do systemów logujących
 Name:		java-commons-logging
-Version:	1.1.1
+Version:	1.1.3
 Release:	1
 License:	Apache v2.0
 Group:		Libraries/Java
 Source0:	http://www.apache.org/dist/commons/logging/source/commons-logging-%{version}-src.tar.gz
-# Source0-md5:	e5cfa8cca13152d7545fde6b1783c60a
+# Source0-md5:	e8e197d628436490886d17cffa108fe3
 Patch0:		build.xml.patch
 URL:		http://commons.apache.org/logging/
 BuildRequires:	ant
@@ -70,37 +70,30 @@ EOF
 
 export LC_ALL=en_US
 
-%ant
+# like default but without test
+%ant clean compile
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_javadir}
 
-install target/commons-logging-1.1.1.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-%{version}.jar
-install target/commons-logging-adapters-1.1.1.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-adapters-%{version}.jar
-install target/commons-logging-api-1.1.1.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-api-%{version}.jar
-install target/commons-logging-appender.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-appender-%{version}.jar
-install target/commons-logging-wrapper.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-wrapper-%{version}.jar
+install target/commons-logging-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-%{version}.jar
+install target/commons-logging-adapters-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-adapters-%{version}.jar
+install target/commons-logging-api-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-api-%{version}.jar
 
 ln -s commons-logging-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging.jar
 ln -s commons-logging-adapters-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-adapters.jar
 ln -s commons-logging-api-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-api.jar
-ln -s commons-logging-appender-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-appender.jar
-ln -s commons-logging-wrapper-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-logging-wrapper.jar
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc NOTICE.txt PROPOSAL.html RELEASE-NOTES.txt STATUS.html license-header.txt
+%doc NOTICE.txt PROPOSAL.html RELEASE-NOTES.txt license-header.txt
 %{_javadir}/commons-logging-%{version}.jar
 %{_javadir}/commons-logging.jar
 %{_javadir}/commons-logging-adapters-%{version}.jar
 %{_javadir}/commons-logging-adapters.jar
 %{_javadir}/commons-logging-api-%{version}.jar
 %{_javadir}/commons-logging-api.jar
-%{_javadir}/commons-logging-appender-%{version}.jar
-%{_javadir}/commons-logging-appender.jar
-%{_javadir}/commons-logging-wrapper-%{version}.jar
-%{_javadir}/commons-logging-wrapper.jar

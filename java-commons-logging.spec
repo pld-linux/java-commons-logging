@@ -53,7 +53,7 @@ na używanie pakietu samodzielnie.
 %setup -q -n commons-logging-%{version}-src
 
 %undos build.xml
-%patch0 -p1
+%patch -P0 -p1
 
 %build
 cat > build.properties << EOF

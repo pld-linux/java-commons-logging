@@ -4,12 +4,14 @@
 # Conditional build:
 %bcond_without	javadoc		# don't build javadoc
 
+%{?use_default_jdk:%use_default_jdk 8}
+
 %define		srcname	commons-logging
 Summary:	Commons Logging - interface for logging systems
 Summary(pl.UTF-8):	Commons Logging - interfejs do systemów logujących
 Name:		java-commons-logging
 Version:	1.1.3
-Release:	1
+Release:	2
 License:	Apache v2.0
 Group:		Libraries/Java
 Source0:	http://www.apache.org/dist/commons/logging/source/commons-logging-%{version}-src.tar.gz
@@ -23,10 +25,10 @@ BuildRequires:	java-avalon-framework
 BuildRequires:	java-avalon-logkit
 BuildRequires:	java-junit
 BuildRequires:	java-log4j
-BuildRequires:	jdk >= 1.4
+%buildrequires_jdk
 BuildRequires:	jpackage-utils
 BuildRequires:	rpm-javaprov
-BuildRequires:	rpmbuild(macros) >= 1.553
+BuildRequires:	rpmbuild(macros) >= 1.556
 BuildRequires:	sed >= 4.0
 Requires:	jpackage-utils
 Requires:	jre >= 1.4

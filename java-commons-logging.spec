@@ -31,7 +31,6 @@ BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.556
 BuildRequires:	sed >= 4.0
 Requires:	jpackage-utils
-Requires:	jre >= 1.4
 Obsoletes:	jakarta-commons-logging
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)

@@ -19,7 +19,7 @@ Source0:	http://www.apache.org/dist/commons/logging/source/commons-logging-%{ver
 Patch0:		build.xml.patch
 URL:		http://commons.apache.org/logging/
 BuildRequires:	ant
-BuildRequires:	java(servlet)
+BuildRequires:	java(servlet) < 6
 BuildRequires:	java-avalon-framework
 BuildRequires:	java-avalon-logkit
 BuildRequires:	java-junit

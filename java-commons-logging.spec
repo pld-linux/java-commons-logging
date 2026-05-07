@@ -11,7 +11,7 @@ Summary:	Commons Logging - interface for logging systems
 Summary(pl.UTF-8):	Commons Logging - interfejs do systemów logujących
 Name:		java-commons-logging
 Version:	1.1.3
-Release:	3
+Release:	4
 License:	Apache v2.0
 Group:		Libraries/Java
 Source0:	http://www.apache.org/dist/commons/logging/source/commons-logging-%{version}-src.tar.gz
@@ -19,7 +19,6 @@ Source0:	http://www.apache.org/dist/commons/logging/source/commons-logging-%{ver
 Patch0:		build.xml.patch
 URL:		http://commons.apache.org/logging/
 BuildRequires:	ant
-BuildRequires:	ant-junit
 BuildRequires:	java(servlet)
 BuildRequires:	java-avalon-framework
 BuildRequires:	java-avalon-logkit
@@ -58,12 +57,12 @@ na używanie pakietu samodzielnie.
 
 %build
 cat > build.properties << EOF
-log4j12.jar=%(find-jar log4j)
-junit.jar=%(find-jar junit)
-logkit.jar=%(find-jar avalon-logkit)
-avalon-framework-impl.jar=%(find-jar avalon-framework-impl.jar)
-avalon-framework-api.jar=%(find-jar avalon-framework-api.jar)
-servletapi.jar=%(find-jar servlet-api.jar)
+log4j12.jar=%(find-jar log4j 2>/dev/null)
+junit.jar=%(find-jar junit 2>/dev/null)
+logkit.jar=%(find-jar avalon-logkit 2>/dev/null)
+avalon-framework-impl.jar=%(find-jar avalon-framework-impl.jar 2>/dev/null)
+avalon-framework-api.jar=%(find-jar avalon-framework-api.jar 2>/dev/null)
+servletapi.jar=%(find-jar servlet-api.jar 2>/dev/null)
 EOF
 
 ! grep -q '=$' build.properties

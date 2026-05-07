@@ -35,6 +35,8 @@ Obsoletes:	jakarta-commons-logging
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define		find_jar()	%(JAVA_HOME="%{java_home}" find-jar %1 2>/dev/null)
+
 %description
 The commons-logging package provides a simple, component oriented
 interface (org.apache.commons.logging.Log) together with wrappers for
@@ -58,12 +60,12 @@ na używanie pakietu samodzielnie.
 
 %build
 cat > build.properties << EOF
-log4j12.jar=%(find-jar log4j 2>/dev/null)
-junit.jar=%(find-jar junit 2>/dev/null)
-logkit.jar=%(find-jar avalon-logkit 2>/dev/null)
-avalon-framework-impl.jar=%(find-jar avalon-framework-impl.jar 2>/dev/null)
-avalon-framework-api.jar=%(find-jar avalon-framework-api.jar 2>/dev/null)
-servletapi.jar=%(find-jar servlet-api.jar 2>/dev/null)
+log4j12.jar=%{find_jar log4j}
+junit.jar=%{find_jar junit}
+logkit.jar=%{find_jar avalon-logkit}
+avalon-framework-impl.jar=%{find_jar avalon-framework-impl.jar}
+avalon-framework-api.jar=%{find_jar avalon-framework-api.jar}
+servletapi.jar=%{find_jar servlet-api.jar}
 EOF
 
 ! grep -q '=$' build.properties

@@ -27,7 +27,7 @@ BuildRequires:	java-log4j
 %buildrequires_jdk
 BuildRequires:	jpackage-utils
 BuildRequires:	rpm-javaprov
-BuildRequires:	rpmbuild(macros) >= 1.556
+BuildRequires:	rpmbuild(macros) >= 2.021
 BuildRequires:	sed >= 4.0
 Requires:	jpackage-utils
 Obsoletes:	jakarta-commons-logging
